@@ -1,0 +1,52 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background: rgb(58, 58, 58);
+}
+h1{
+    font-size: 1.3rem;
+    color: white;
+    font-family: monospace;
+    font-weight: 600;
+}
+table{
+    display: block;
+    background: rgb(70, 70, 70);
+    border: 1px solid white;
+}
+table tr{
+    border: none;
+}
+img{
+    display:block;
+    margin: 0 auto;
+    width: 100%;
+    background-size: cover !important; 
+    background-position: center !important;
+}
+table td{
+    margin: 0;
+    border: none;
+    height: 11vh;
+    width: 11vh;
+    background-position: center !important;
+    background-size: cover !important;
+}
+
+.fBranco{
+    background: rgb(255, 255, 255) !important;
+}
+.fPreto{
+    background: rgb(41, 82, 116) !important;
+}
+.selected{
+    background: red !important;
+}
