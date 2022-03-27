@@ -16,7 +16,7 @@ class Tabuleiro {
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
         ["peao_B","peao_B","peao_B","peao_B","peao_B","peao_B","peao_B","peao_B"],
         ["torre_B","cavalo_B","bispo_B","rei_B","rainha_B","bispo_B","cavalo_B","torre_B"]]
-
+        this.posicaoAtual = this.posicaoInicial;
         localStorage.clear()
         // Montar tabuleiro na tela
         this._montarTabuleiro(this.posicaoInicial)
@@ -51,23 +51,39 @@ class Tabuleiro {
             controleCor == 0 ? controleCor = 1 : controleCor = 0
         }
         // resetar localstorage------------------------------------
-        localStorage.setItem('coordenadaPecaSelecionada', '')
-        localStorage.setItem('JogadorPeca', '')
-        localStorage.setItem('pecaSelecionada', '')
+        this.limparLocalstorage()
         // --------------------------------------------------------
         root.appendChild(table)
     }
 
     jogadorPeca(peca){
-        let jogadorPeca = peca.split('_')[1] == 'B' ? 'brancas' : 'pretas'; 
-        return jogadorPeca;
+        let jogadorPeca = peca.split('_')[1] 
+        if(jogadorPeca == 'B'){
+            return 'brancas' 
+        }else if(jogadorPeca == 'P'){
+            return 'pretas'
+            } return '';
     }
 
     limparSelecao(){
         document.querySelectorAll('td').forEach( Element => {
             Element.classList.remove('selected')
         })
-        
+    }
+
+    alternarVez(){
+        if(this.jogadorVez == 'brancas'){
+            this.jogadorVez = 'pretas' 
+        }else if(this.jogadorVez == 'pretas'){
+            this.jogadorVez = 'brancas'
+        }
+    }
+    limparLocalstorage(){
+        localStorage.setItem('posicaoClicada','')
+        localStorage.setItem('coordenadaPecaClicada','')
+        localStorage.setItem('coordenadaPecaSelecionada','')
+        localStorage.setItem('pecaSelecionada','')
+        localStorage.setItem('JogadorPeca','')
     }
 
     calcularPosicaoMatriz(localizacaoTabuleiro){
@@ -80,26 +96,75 @@ class Tabuleiro {
     preparaLance(entrada,id){
         // Limpar seleção
         this.limparSelecao()
-        let pecaNaPosicaoClicada = entrada.firstElementChild.src.split('/')[6].replace('.png','')
-        if(pecaNaPosicaoClicada == 'vazio'){
-            let corPeca = pecaNaPosicaoClicada.split('_')[1] == 'B' ? 'brancas' : 'pretas';
+        let pecaClicada = entrada.firstElementChild.src.split('/')[6].replace('.png','')
+        if(localStorage.getItem('pecaSelecionada') != ''){
             if(localStorage.getItem('JogadorPeca') == this.jogadorVez){
-                console.log('requisicao')
+                // Executar lance
                 this.limparSelecao()
-                // chamar serviço
+                localStorage.setItem('pecaClicada',pecaClicada)
+                localStorage.setItem('coordenadaPecaClicada', this.calcularPosicaoMatriz(id))
+                this.consultarLance()
+                this.limparSelecao()
+                this.limparLocalstorage() 
+                console.log('tentiva de lance')
             }
-            else{
-                localStorage.setItem('pecaSelecionada', '')
-                this.limparSelecao()
+        else{
+            // Não é a vez daquele jogador
+            this.limparSelecao() 
+            this.limparLocalstorage()
+            console.log('Não é a vez daquele jogador')
             }
         }else{
-            // salvarSelecionado
+            // Selecionar uma peça
+            console.log('Selecionando peca')
             localStorage.setItem('coordenadaPecaSelecionada', this.calcularPosicaoMatriz(id))
-            localStorage.setItem('JogadorPeca', this.jogadorPeca(pecaNaPosicaoClicada))
-            localStorage.setItem('pecaSelecionada', pecaNaPosicaoClicada)
+            localStorage.setItem('pecaSelecionada', pecaClicada)
+            localStorage.setItem('JogadorPeca', this.jogadorPeca(pecaClicada))
             entrada.classList.add('selected')
         }
     }
-}
+    consultarLance(){
+        const body = {
+            "coordenadaPecaSelecionada": localStorage.getItem('coordenadaPecaSelecionada'),
+            "pecaSelecionada": localStorage.getItem('pecaSelecionada'),
+            "JogadorPeca": localStorage.getItem('JogadorPeca'),
+            "pecaClicada": localStorage.getItem('pecaClicada'),
+            "jogadorVez": this.jogadorVez,
+            "coordenadaPecaClicada": localStorage.getItem('coordenadaPecaClicada'),
+            "posicaoAtual" :this.posicaoAtual
+        }
 
+        let requisicao = new XMLHttpRequest();
+        requisicao.open('POST', 'http://localhost:8080')
+        requisicao.onreadystatechange = ()=> {
+            if (requisicao.readyState == 4){
+                console.log(requisicao.responseText)
+                let respose = JSON.parse(requisicao.responseText)
+                if(respose.success){
+                    this.efetuarLance(respose)
+                }
+            }
+        }
+        requisicao.send(JSON.stringify(body))
+    }
+
+    efetuarLance(response){
+        const nomePeca = response.data.nomePeca
+        const posicaoPecas = [response.data.jogada, response.data.posicaoPecaSelecionada]
+        let ids =[]
+        for(let controle =0; controle<2;controle++){
+            const linha = posicaoPecas[controle][0]
+            const coluna = posicaoPecas[controle][1]
+            const idPosicao = (64-(linha*8))-coluna
+            ids.push(idPosicao)
+        }
+        // Colocar peça na nova posição
+        const imagemPecaNaPosicaoClicada = document.getElementById(ids[0]).firstElementChild
+        imagemPecaNaPosicaoClicada.src="./assets/images/"+nomePeca+".png";
+        // Limpar posição onde a peça estava
+        const imagemPecaNaPosicao =  document.getElementById(ids[1]).firstElementChild
+        imagemPecaNaPosicao.src="./assets/images/vazio.png";
+        this.alternarVez();
+    }
+}
 const tabuleiro = new Tabuleiro(root)
