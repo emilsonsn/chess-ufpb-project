@@ -151,6 +151,7 @@ class Tabuleiro {
     efetuarLance(response){
         const nomePeca = response.data.nomePeca
         const posicaoPecas = [response.data.jogada, response.data.posicaoPecaSelecionada]
+        this.posicaoAtual = response.data.posicaoAtual
         let ids =[]
         for(let controle =0; controle<2;controle++){
             const linha = posicaoPecas[controle][0]

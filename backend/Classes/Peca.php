@@ -13,8 +13,18 @@
             $this->jogadorPeca = $lance['JogadorPeca'];
             $this->posicaoPecaSelecionada = str_split(str_replace('|','',$lance['coordenadaPecaSelecionada']));
             $this->tentativaLance =  str_split(str_replace('|','',$lance['coordenadaPecaClicada']));;
+            $this->converterPosicaoParaNumero();
             $this->CalcularCasasPossiveis($lance['posicaoAtual']); 
             $this->CalcularTentativaLance($lance['posicaoAtual']);
+        }
+
+        
+        public function CalcularTentativaLance($posicaoPecaSelecionada){
+            foreach($this->casasPossiveis as $indice => $value){
+                if($this->tentativaLance == $value){
+                    $this->validacaoLance = true;
+                }
+            }
         }
 
         public function converterPosicaoParaNumero(){
