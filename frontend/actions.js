@@ -8,14 +8,14 @@ class Tabuleiro {
         this.numeroColunas = 8,
         this.numeroLinhas = 8
         this.posicaoInicial =
-        [["torre_P","cavalo_P","bispo_P","rei_P","rainha_P","bispo_P","cavalo_P","torre_P"],
+        [["torre_P","cavalo_P","bispo_P","rei_P","dama_P","bispo_P","cavalo_P","torre_P"],
         ["peao_P","peao_P","peao_P","peao_P","peao_P","peao_P","peao_P","peao_P"],
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
         ["peao_B","peao_B","peao_B","peao_B","peao_B","peao_B","peao_B","peao_B"],
-        ["torre_B","cavalo_B","bispo_B","rei_B","rainha_B","bispo_B","cavalo_B","torre_B"]]
+        ["torre_B","cavalo_B","bispo_B","rei_B","dama_B","bispo_B","cavalo_B","torre_B"]]
         this.posicaoAtual = this.posicaoInicial;
         localStorage.clear()
         // Montar tabuleiro na tela

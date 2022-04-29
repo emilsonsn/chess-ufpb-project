@@ -13,17 +13,14 @@
                     $direcoes = [
                         [$this->posicaoPecaSelecionada[0],$this->posicaoPecaSelecionada[1]+$contador], //direita
                         [$this->posicaoPecaSelecionada[0],$this->posicaoPecaSelecionada[1]-$contador], //esquerda
-                        [$this->posicaoPecaSelecionada[0]-$contador,$this->posicaoPecaSelecionada[1]], //direita
-                        [$this->posicaoPecaSelecionada[0]+$contador,$this->posicaoPecaSelecionada[1]+$contador] //direita
-                    ];
-                    $condicoes= [
-                        [($this->posicaoPecaSelecionada[1]+$contador <= 7 && $this->posicaoPecaSelecionada[1] >= 0)],
-                        [($this->posicaoPecaSelecionada[1]-$contador <= 7 && $this->posicaoPecaSelecionada[1] >= 0)],
-                        [($this->posicaoPecaSelecionada[0]-$contador<= 7 && $this->posicaoPecaSelecionada[1] >= 0)],
-                        [($this->posicaoPecaSelecionada[0]+$contador <= 7 && $this->posicaoPecaSelecionada[1] >= 0)],
+                        [$this->posicaoPecaSelecionada[0]-$contador,$this->posicaoPecaSelecionada[1]], //cima
+                        [$this->posicaoPecaSelecionada[0]+$contador,$this->posicaoPecaSelecionada[1]] //baixo
                     ];
 
-                    if($condicoes[$controle][0]){
+                    if(
+                    $direcoes[$controle][0] <= 7 && $direcoes[$controle][0] >=0 &&
+                    $direcoes[$controle][1] <= 7 && $direcoes[$controle][1] >=0
+                    ){
                             if(
                             isset($lance[$direcoes[$controle][0]][$direcoes[$controle][1]]) && (
                             isset(explode('_',$lance[$direcoes[$controle][0]][$direcoes[$controle][1]])[1]) &&(

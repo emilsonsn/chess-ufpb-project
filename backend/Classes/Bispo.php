@@ -17,16 +17,11 @@
                     [$this->posicaoPecaSelecionada[0]-$contador,$this->posicaoPecaSelecionada[1]-$contador],
                     [$this->posicaoPecaSelecionada[0]+$contador,$this->posicaoPecaSelecionada[1]-$contador]
                 ];
-                $condicoes = [
-                    [($this->posicaoPecaSelecionada[0]-$contador >= 0),($this->posicaoPecaSelecionada[1]+$contador <= 7)],
-                    [($this->posicaoPecaSelecionada[0]+$contador <= 7),($this->posicaoPecaSelecionada[1]+$contador<= 7)],
-                    [($this->posicaoPecaSelecionada[0]-$contador >= 0),($this->posicaoPecaSelecionada[1]-$contador>= 0)],
-                    [($this->posicaoPecaSelecionada[0]+$contador <= 7),($this->posicaoPecaSelecionada[1]-$contador>= 0)]
-                ];
+
                 if(
-                ($condicoes[$controle][0] &&
-                $condicoes[$controle][1]
-                )){
+                    $diagonais[$controle][0] <= 7 && $diagonais[$controle][0] >=0 &&
+                    $diagonais[$controle][1] <= 7 && $diagonais[$controle][1] >=0
+                ){
                     if(
                     isset(explode('_',$lance[$diagonais[$controle][0]][$diagonais[$controle][1]])[1]) &&(
                     explode('_',$lance[$diagonais[$controle][0]][$diagonais[$controle][1]])[1] != $this->peca &&

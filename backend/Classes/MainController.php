@@ -39,7 +39,7 @@ class MainController{
                 $this->lance['posicaoAtual'][$peca->tentativaLance[0]][$peca->tentativaLance[1]] = $peca->nome;
                 $this->lance['posicaoAtual'][$peca->posicaoPecaSelecionada[0]][$peca->posicaoPecaSelecionada[1]] = "vazio";
                 // Efetuar lance se movimento for válido
-                $peca->validacaoLance ? $this->efetuarLance($peca->tentativaLance, $peca->nome,$peca->posicaoPecaSelecionada,$this->lance['posicaoAtual']) : $this->lanceErro('lance inválido');
+                ($peca->validacaoLance && $this->verificaPerigoRei()) ? $this->efetuarLance($peca->tentativaLance, $peca->nome,$peca->posicaoPecaSelecionada,$this->lance['posicaoAtual']) : $this->lanceErro('lance inválido');
             }
             else{
                 $this->lanceErro('Não é a sua vez');
@@ -64,5 +64,13 @@ class MainController{
 
     public function lanceErro(String $err){
         echo '{"success" : false,"data":"'.$err.'"}';
+    }
+    
+    public function verificaPerigoRei(){
+        $reiController = new \Classes\ReiController($this->lance['posicaoAtual'], $this->lance['pecaSelecionada']);
+        if($reiController->validaRei()){
+            return true;
+        }
+        return false;
     }
 }
