@@ -68,7 +68,7 @@ class MainController{
     
     public function verificaPerigoRei(){
         $reiController = new \Classes\ReiController($this->lance['posicaoAtual'], $this->lance['pecaSelecionada']);
-        if($reiController->validaRei()){
+        if($reiController->verificarAmeacaRei()){
             return true;
         }
         return false;

@@ -11,7 +11,7 @@
                 [$this->posicaoPecaSelecionada[0],$this->posicaoPecaSelecionada[1]+1], //pra direita
                 [$this->posicaoPecaSelecionada[0],$this->posicaoPecaSelecionada[1]-1], //pra esquerda
                 [$this->posicaoPecaSelecionada[0]-1,$this->posicaoPecaSelecionada[1]+1], //diagonal superior direita
-                [$this->posicaoPecaSelecionada[0]-1,$this->posicaoPecaSelecionada[1]+1], //diagonal inferiror direita
+                [$this->posicaoPecaSelecionada[0]+1,$this->posicaoPecaSelecionada[1]+1], //diagonal inferior direita
                 [$this->posicaoPecaSelecionada[0]-1,$this->posicaoPecaSelecionada[1]-1], //diagonal superior esquerda
                 [$this->posicaoPecaSelecionada[0]+1,$this->posicaoPecaSelecionada[1]-1] //diagonal inferior esquerda
             ];

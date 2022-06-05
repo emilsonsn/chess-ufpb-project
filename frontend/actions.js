@@ -8,14 +8,14 @@ class Tabuleiro {
         this.numeroColunas = 8,
         this.numeroLinhas = 8
         this.posicaoInicial =
-        [["torre_P","cavalo_P","bispo_P","rei_P","dama_P","bispo_P","cavalo_P","torre_P"],
-        ["peao_P","peao_P","peao_P","peao_P","peao_P","peao_P","peao_P","peao_P"],
+        [["Torre_P","Cavalo_P","Bispo_P","Rei_P","Dama_P","Bispo_P","Cavalo_P","Torre_P"],
+        ["Peao_P","Peao_P","Peao_P","Peao_P","Peao_P","Peao_P","Peao_P","Peao_P"],
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
         ["vazio","vazio","vazio","vazio","vazio","vazio","vazio","vazio"],
-        ["peao_B","peao_B","peao_B","peao_B","peao_B","peao_B","peao_B","peao_B"],
-        ["torre_B","cavalo_B","bispo_B","rei_B","dama_B","bispo_B","cavalo_B","torre_B"]]
+        ["Peao_B","Peao_B","Peao_B","Peao_B","Peao_B","Peao_B","Peao_B","Peao_B"],
+        ["Torre_B","Cavalo_B","Bispo_B","Rei_B","Dama_B","Bispo_B","Cavalo_B","Torre_B"]]
         this.posicaoAtual = this.posicaoInicial;
         localStorage.clear()
         // Montar tabuleiro na tela
@@ -72,12 +72,9 @@ class Tabuleiro {
     }
 
     alternarVez(){
-        if(this.jogadorVez == 'brancas'){
-            this.jogadorVez = 'pretas' 
-        }else if(this.jogadorVez == 'pretas'){
-            this.jogadorVez = 'brancas'
-        }
+    this.jogadorVez == 'brancas' ? this.jogadorVez = 'pretas' : this.jogadorVez = 'brancas'
     }
+    
     limparLocalstorage(){
         localStorage.setItem('posicaoClicada','')
         localStorage.setItem('coordenadaPecaClicada','')

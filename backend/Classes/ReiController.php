@@ -4,17 +4,14 @@
         public function __construct($posicaoTabuleiro, $JogadorPecaSelecionada){
             $this->posicaoTabuleiro = $posicaoTabuleiro;
             $this->JogadorPecaSelecionada= explode("_",$JogadorPecaSelecionada)[1];
-        }
-        public function validaRei(){
             $this->getPosicaoRei();
-            return $this->verificarAmeacaRei();
         }
-
+        
         public function getPosicaoRei (){
-            foreach($this->posicaoTabuleiro as $linhaIndice => $linhaValue){
-                foreach($linhaValue as $colunaIndice => $colunaValue){
-                    if(explode("_",$colunaValue)[0] == 'rei' && explode("_",$colunaValue)[1] == $this->JogadorPecaSelecionada){
-                        $this->posicaoRei = [$linhaIndice, $colunaIndice];
+            for($contador=0; $contador<=7; $contador++){
+                foreach($this->posicaoTabuleiro[$contador] as $colunaIndice => $colunaValue){
+                    if(explode("_",$colunaValue)[0] == 'Rei' && explode("_",$colunaValue)[1] == $this->JogadorPecaSelecionada){
+                        $this->posicaoRei = [$contador, $colunaIndice];
                     }
                 }        
             }
@@ -22,23 +19,29 @@
 
         public function verificarAmeacaRei(){
             if(
-            $this->verificarAmecaPeao() ||
-            $this->verificarAmecaCavalo() ||
-            $this->verificarAmecaBispoRainha() ||
-            $this->verificarAmecaTorreRainha() ||
-            $this->verificarAmeacaReiInimigo()
+            $this->verificarAmecaPeao()
             ){
                 return false;
             }
-
+            return true;
         }
 
         public function verificarAmecaPeao(){
-            if($JogadorPecaSelecionada == "B"){
-                
+            if($this->JogadorPecaSelecionada == "B"){
+                if($this->posicaoTabuleiro[$this->posicaoRei[0]-1][$this->posicaoRei[1]-1] == "Peao_P" ||
+                   $this->posicaoTabuleiro[$this->posicaoRei[0]-1][$this->posicaoRei[1]+1] == "Peao_P"
+                ){
+                    return true;
+                }
+            return false;
             }
             else{
-
+                if($this->posicaoTabuleiro[$this->posicaoRei[0]+1][$this->posicaoRei[1]-1] == "Peao_B" ||
+                   $this->posicaoTabuleiro[$this->posicaoRei[0]+1][$this->posicaoRei[1]+1] == "Peao_B"
+                ){
+                    return true;
+                }
+            return false;
             }
         }
     }
