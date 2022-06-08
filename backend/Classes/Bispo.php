@@ -11,7 +11,7 @@
             $this->jogadorPeca == 'brancas' ? $this->peca = 'B' : $this->peca = 'P';
             // Diagonal direita superior
             while($existemCasaNessaDiagonal){
-                $diagonais = [
+                $diagonais = [ 
                     [$this->posicaoPecaSelecionada[0]-$contador,$this->posicaoPecaSelecionada[1]+$contador],
                     [$this->posicaoPecaSelecionada[0]+$contador,$this->posicaoPecaSelecionada[1]+$contador],
                     [$this->posicaoPecaSelecionada[0]-$contador,$this->posicaoPecaSelecionada[1]-$contador],
